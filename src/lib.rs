@@ -13,10 +13,15 @@ use plotters::style::WHITE;
 pub fn plot(name: &str, input: &Vec<extractor::Response>) -> Result<(), Box<dyn std::error::Error>> {
 
     let max = input.iter().max_by(|x, y| x.exec_time.cmp(&y.exec_time)).unwrap();
-    let file_name = format!("{}",input[0].date_as_date.format(&("%Y-%m-%d_".to_owned() + name + ".png")));
-    let path = String::from("charts/") + &file_name;
+    let date = format!("{}",input[0].date_as_date.format("%Y-%m-%d"));
+    let path = "charts/".to_owned() + &date;
+    if !std::path::Path::new(&path).exists() {
+        std::fs::create_dir(path.clone())?;
+    }
+    let file_name =  date + "_" + name + ".png";
+    let full_path = path + "/" + &file_name;
     
-    let root = BitMapBackend::new(&path, (1024, 640)).into_drawing_area();
+    let root = BitMapBackend::new(&full_path, (1024, 640)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
         .caption(file_name, ("sans-serif", 50).into_font())
