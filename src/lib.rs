@@ -13,13 +13,13 @@ use plotters::style::WHITE;
 pub fn plot(name: &str, input: &Vec<extractor::Response>) -> Result<(), Box<dyn std::error::Error>> {
 
     let max = input.iter().max_by(|x, y| x.exec_time.cmp(&y.exec_time)).unwrap();
-    let file_name = format!("{}",input[0].date_as_date.format("%Y-%m-%d.png"));
-    let path = String::from("charts/") + &file_name + "_"+ name;
+    let file_name = format!("{}",input[0].date_as_date.format(&("%Y-%m-%d_".to_owned() + name + ".png")));
+    let path = String::from("charts/") + &file_name;
     
     let root = BitMapBackend::new(&path, (1024, 640)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
-        .caption(file_name + " " + name, ("sans-serif", 50).into_font())
+        .caption(file_name, ("sans-serif", 50).into_font())
         .margin(5)
         .x_label_area_size(150)
         .y_label_area_size(150)
@@ -27,7 +27,7 @@ pub fn plot(name: &str, input: &Vec<extractor::Response>) -> Result<(), Box<dyn 
 
     
     let pos = Pos::new(HPos::Left, VPos::Bottom);
-    let x_label_style = TextStyle::from(("Ubuntu Medium", 10).into_font())
+    let x_label_style = TextStyle::from(("sans-serif", 10).into_font())
         .pos(pos)
         .transform(FontTransform::Rotate270);
 
