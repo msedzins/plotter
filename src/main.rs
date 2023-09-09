@@ -58,14 +58,24 @@ fn main() {
             end = response.len() -1;
         }
 
+        if start >= end {
+            break;
+        }
+
        let average = (start..end).into_iter().fold(0, |acc, x| acc + response[x].exec_time) / (start..end).into_iter().len() as i32;
 
+       let s2 =  if start + step/2 >= response.len() {
+            response.len() - 1
+        } else  { 
+        start + step/2
+        };
+
        av.push(Response {
-         date_as_date:  response[start + step/2].date_as_date,
-         date_as_timestamp: response[start + step/2].date_as_timestamp,
+         date_as_date:  response[s2].date_as_date,
+         date_as_timestamp: response[s2].date_as_timestamp,
          exec_time: average,
 
-         date_as_string: response[start + step/2].date_as_string.clone(),
+         date_as_string: response[s2].date_as_string.clone(),
        });
 
         start += step;
