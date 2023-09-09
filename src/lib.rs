@@ -14,7 +14,7 @@ pub fn plot(name: &str, input: &Vec<extractor::Response>) -> Result<(), Box<dyn 
 
     let max = input.iter().max_by(|x, y| x.exec_time.cmp(&y.exec_time)).unwrap();
     let file_name = format!("{}",input[0].date_as_date.format("%Y-%m-%d.png"));
-    let path = String::from("charts/") + &file_name;
+    let path = String::from("charts/") + &file_name + "_"+ name;
     
     let root = BitMapBackend::new(&path, (1024, 640)).into_drawing_area();
     root.fill(&WHITE)?;
