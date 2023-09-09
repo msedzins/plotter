@@ -16,10 +16,10 @@ pub fn plot(name: &str, input: &Vec<extractor::Response>) -> Result<(), Box<dyn 
     let file_name = format!("{}",input[0].date_as_date.format("%Y-%m-%d.png"));
     let path = String::from("charts/") + &file_name;
     
-    let root = BitMapBackend::new(&path, (640, 480)).into_drawing_area();
+    let root = BitMapBackend::new(&path, (1024, 640)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
-        .caption(name, ("sans-serif", 50).into_font())
+        .caption(file_name + " " + name, ("sans-serif", 50).into_font())
         .margin(5)
         .x_label_area_size(150)
         .y_label_area_size(150)

@@ -15,6 +15,10 @@ struct Args {
     #[arg(short, long)]
     filter: Vec<String>,
 
+    /// Diagram title
+    #[arg(long)]
+    title: String,
+
     /// Position of date inside logs (34m2023-08-28)
     #[arg(short, long, default_value_t = 1)]
     date_pos: usize,
@@ -84,5 +88,5 @@ fn main() {
         }
     }
 
-    log_plotter::plot(args.filter.last().unwrap(),&av).expect("Error generating diagram");
+    log_plotter::plot(&args.title,&av).expect("Error generating diagram");
 }
