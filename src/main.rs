@@ -53,6 +53,11 @@ fn main() {
     }
 
     //Calculate averages (should be moved to separate function)
+    if response.len() == 0 {
+        println!("No data. Exiting");
+        return;
+    }
+
     let mut av: Vec<Response> = Vec::new();
     let mut start = 0;
     let step = args.step;
@@ -86,6 +91,11 @@ fn main() {
         if start >= response.len() {
             break;
         }
+    }
+
+    if av.len() == 0 {
+        println!("No data. Exiting");
+        return;
     }
 
     log_plotter::plot(&args.title,&av).expect("Error generating diagram");
